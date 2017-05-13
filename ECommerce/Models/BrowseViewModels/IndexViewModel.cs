@@ -12,6 +12,7 @@ namespace ECommerce.Models.BrowseViewModels
             public string Name { get; set; }
             public ICollection<string> Paths { get; set; }
             public int CommodityID { get; set; }
+            public string Genre { get; set; }
         }
 
         public ICollection<Commodity> Commodities;

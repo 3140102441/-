@@ -57,7 +57,8 @@ namespace ECommerce.Controllers
                 {
                     CommodityID = i.ID,
                     Name = i.Name,
-                    Paths = i.Paths.Select(j => j.FullPath()).ToList()
+                    Paths = i.Paths.Select(j => j.FullPath()).ToList(),
+                    Genre = i.Genre
                 });
 
             return View(new Models.BrowseViewModels.IndexViewModel { Commodities = await commodities.ToListAsync() });
