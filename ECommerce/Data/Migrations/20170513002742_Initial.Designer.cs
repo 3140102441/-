@@ -4,11 +4,12 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using ECommerce.Data;
+using ECommerce.Models;
 
 namespace ECommerce.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170512144941_Initial")]
+    [Migration("20170513002742_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -65,6 +66,128 @@ namespace ECommerce.Data.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("ECommerce.Models.Comment", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("CommodityID");
+
+                    b.Property<int>("Content");
+
+                    b.Property<int>("CustomerID");
+
+                    b.Property<int>("Grade");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Comment");
+                });
+
+            modelBuilder.Entity("ECommerce.Models.Commodity", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description")
+                        .IsRequired();
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<decimal>("Price");
+
+                    b.Property<int>("Quantity");
+
+                    b.Property<int>("SellerID");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("SellerID");
+
+                    b.ToTable("Commodity");
+                });
+
+            modelBuilder.Entity("ECommerce.Models.Customer", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ApplicationUserID")
+                        .IsRequired();
+
+                    b.Property<string>("CreditCardNumber");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Customer");
+                });
+
+            modelBuilder.Entity("ECommerce.Models.Path", b =>
+                {
+                    b.Property<string>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(30);
+
+                    b.Property<string>("CommodityID")
+                        .IsRequired();
+
+                    b.Property<int?>("CommodityID1");
+
+                    b.Property<string>("ExtendedName")
+                        .IsRequired();
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("CommodityID1");
+
+                    b.ToTable("Path");
+                });
+
+            modelBuilder.Entity("ECommerce.Models.Record", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("CommodityID");
+
+                    b.Property<int>("CustomerID");
+
+                    b.Property<DateTime>("FinishDate");
+
+                    b.Property<int>("SellerID");
+
+                    b.Property<DateTime>("StartDate");
+
+                    b.Property<int>("State");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("CustomerID");
+
+                    b.HasIndex("SellerID");
+
+                    b.ToTable("Record");
+                });
+
+            modelBuilder.Entity("ECommerce.Models.Seller", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ApplicationUserID")
+                        .IsRequired();
+
+                    b.Property<string>("CreditCardNumber")
+                        .IsRequired();
+
+                    b.Property<int>("Grade");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Seller");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
@@ -172,6 +295,34 @@ namespace ECommerce.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("ECommerce.Models.Commodity", b =>
+                {
+                    b.HasOne("ECommerce.Models.Seller")
+                        .WithMany("Commodities")
+                        .HasForeignKey("SellerID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ECommerce.Models.Path", b =>
+                {
+                    b.HasOne("ECommerce.Models.Commodity")
+                        .WithMany("Paths")
+                        .HasForeignKey("CommodityID1");
+                });
+
+            modelBuilder.Entity("ECommerce.Models.Record", b =>
+                {
+                    b.HasOne("ECommerce.Models.Customer")
+                        .WithMany("Records")
+                        .HasForeignKey("CustomerID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ECommerce.Models.Seller")
+                        .WithMany("Records")
+                        .HasForeignKey("SellerID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>

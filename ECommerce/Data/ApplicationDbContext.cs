@@ -15,6 +15,13 @@ namespace ECommerce.Data
         {
         }
 
+        public DbSet<Comment> Comment { get; set; }
+        public DbSet<Commodity> Commodity { get; set; }
+        public DbSet<Customer> Customer { get; set; }
+        public DbSet<Path> Path { get; set; }
+        public DbSet<Record> Record { get; set; }
+        public DbSet<Seller> Seller { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
