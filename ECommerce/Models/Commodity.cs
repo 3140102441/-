@@ -26,5 +26,8 @@ namespace ECommerce.Models
 
         [Required]
         public string Description { get; set; }
+
+        [Required]
+        public string Genre { get; set; }
     }
 }
