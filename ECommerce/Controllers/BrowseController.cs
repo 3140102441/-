@@ -56,6 +56,7 @@ namespace ECommerce.Controllers
 
         }
 
+        [HttpPost]
         public async Task<IActionResult> Search(string searchSrting)
         {
 
