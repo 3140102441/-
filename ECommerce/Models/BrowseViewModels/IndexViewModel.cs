@@ -19,5 +19,7 @@ namespace ECommerce.Models.BrowseViewModels
         public string SearchString { get; set; }
 
         public ICollection<string> Genres;
+
+        public string Genre { get; set; }
     }
 }
