@@ -19,7 +19,7 @@ namespace ECommerce.Models
         [Required]
         public int SellerID { get; set; }
 
-        public ICollection<Path> Paths { get; set; }
+        public ICollection<ImagePath> Paths { get; set; }
 
         [Required]
         public string Name { get; set; }

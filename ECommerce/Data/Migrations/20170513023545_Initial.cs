@@ -55,7 +55,9 @@ namespace ECommerce.Data.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ApplicationUserID = table.Column<string>(nullable: false),
                     CreditCardNumber = table.Column<string>(nullable: false),
-                    Grade = table.Column<int>(nullable: false)
+                    Grade = table.Column<int>(nullable: false),
+                    GradeQuantity = table.Column<int>(nullable: false),
+                    TotalGrade = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -119,20 +121,20 @@ namespace ECommerce.Data.Migrations
                 name: "Path",
                 columns: table => new
                 {
-                    ID = table.Column<string>(maxLength: 30, nullable: false),
-                    CommodityID = table.Column<string>(nullable: false),
-                    CommodityID1 = table.Column<int>(nullable: true),
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CommodityID = table.Column<int>(nullable: false),
                     ExtendedName = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Path", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Path_Commodity_CommodityID1",
-                        column: x => x.CommodityID1,
+                        name: "FK_Path_Commodity_CommodityID",
+                        column: x => x.CommodityID,
                         principalTable: "Commodity",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -147,9 +149,15 @@ namespace ECommerce.Data.Migrations
                 column: "SellerID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Path_CommodityID1",
+                name: "IX_Customer_ApplicationUserID",
+                table: "Customer",
+                column: "ApplicationUserID",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Path_CommodityID",
                 table: "Path",
-                column: "CommodityID1");
+                column: "CommodityID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Record_CustomerID",
@@ -160,6 +168,12 @@ namespace ECommerce.Data.Migrations
                 name: "IX_Record_SellerID",
                 table: "Record",
                 column: "SellerID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Seller_ApplicationUserID",
+                table: "Seller",
+                column: "ApplicationUserID",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

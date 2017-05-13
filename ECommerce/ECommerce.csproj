@@ -34,7 +34,8 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="wwwroot\ComodityImage\" />
+    <Folder Include="wwwroot\CommodityImage\" />
+    <Folder Include="wwwroot\CommodityImage\" />
     <Folder Include="wwwroot\TestImage\" />
   </ItemGroup>
 

@@ -127,23 +127,19 @@ namespace ECommerce.Data.Migrations
                     b.ToTable("Customer");
                 });
 
-            modelBuilder.Entity("ECommerce.Models.Path", b =>
+            modelBuilder.Entity("ECommerce.Models.ImagePath", b =>
                 {
-                    b.Property<string>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30);
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<string>("CommodityID")
-                        .IsRequired();
-
-                    b.Property<int?>("CommodityID1");
+                    b.Property<int>("CommodityID");
 
                     b.Property<string>("ExtendedName")
                         .IsRequired();
 
                     b.HasKey("ID");
 
-                    b.HasIndex("CommodityID1");
+                    b.HasIndex("CommodityID");
 
                     b.ToTable("Path");
                 });
@@ -314,11 +310,12 @@ namespace ECommerce.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("ECommerce.Models.Path", b =>
+            modelBuilder.Entity("ECommerce.Models.ImagePath", b =>
                 {
                     b.HasOne("ECommerce.Models.Commodity")
                         .WithMany("Paths")
-                        .HasForeignKey("CommodityID1");
+                        .HasForeignKey("CommodityID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ECommerce.Models.Record", b =>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ECommerce.Models;
 using Microsoft.AspNetCore.Identity;
+using System.IO;
 
 namespace ECommerce.Data
 {
@@ -80,7 +81,29 @@ namespace ECommerce.Data
                 context.SaveChanges();
             }
 
+            var path = new Models.ImagePath
+            {
+                CommodityID = context.Commodity.Where(i => i.Name == "Calculus").ToList()[0].ID,
+                ExtendedName = ".jpg"
+            };
 
+            var paths = new ImagePath[]
+            {
+                path
+            };
+
+            using (var writer = new BinaryWriter(File.Open(path.FullPath(), FileMode.Create)))
+            {
+                var content = File.ReadAllBytes(
+                    Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot", @"TestImage", @"test1.jpg"));
+                writer.Write(content);
+            }
+
+            foreach (var item in paths)
+            {
+                context.Add(item);
+                context.SaveChanges();
+            }
 
         }
     }
