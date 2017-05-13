@@ -57,11 +57,11 @@ namespace ECommerce.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Search(string searchSrting)
+        public async Task<IActionResult> Search(Models.BrowseViewModels.IndexViewModel model)
         {
 
-            var searchRes = await _context.Commodity.Where(i => i.Name.Contains(searchSrting))
-                .Select(i => new Models.BrowseViewModels.CommodityListViewModel.Commodity
+            var searchRes = await _context.Commodity.Where(i => i.Name.Contains(model.SearchString))
+                .Select(i => new Models.BrowseViewModels.IndexViewModel.Commodity
                 {
                     Genre = i.Genre,
                     ImagePaths = i.Paths.Select(j => j.FullStaticPath()).ToList(),
@@ -69,7 +69,7 @@ namespace ECommerce.Controllers
                 })
                 .ToListAsync();
 
-            return View(new Models.BrowseViewModels.CommodityListViewModel { Commodities = searchRes });
+            return View(new Models.BrowseViewModels.IndexViewModel { Commodities = searchRes });
         }
     }
 }
