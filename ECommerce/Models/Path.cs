@@ -24,7 +24,7 @@ namespace ECommerce.Models
 
         public string FullStaticPath()
         {
-            return Path.Combine(@"wwwroot", @"CommodityImage", ID.ToString() + ExtendedName);
+            return Path.Combine(@"~", @"CommodityImage", ID.ToString() + ExtendedName);
         }
     }
 }
