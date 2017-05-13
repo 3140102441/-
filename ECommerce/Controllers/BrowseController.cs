@@ -18,7 +18,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ECommerce.Controllers
 {
-    public class BrowserController : Controller
+    public class BrowseController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -29,7 +29,7 @@ namespace ECommerce.Controllers
         private readonly ApplicationDbContext _context;
 
 
-        public BrowserController(
+        public BrowseController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IOptions<IdentityCookieOptions> identityCookieOptions,
