@@ -11,6 +11,12 @@
   <PropertyGroup>
     <UserSecretsId>aspnet-ECommerce-051a58e9-1dbf-4ccd-86c9-3f480277a3b3</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\TestImage\Calculus.jpg" />
+    <Content Include="wwwroot\TestImage\test1.jpg" />
+    <Content Include="wwwroot\TestImage\test2.jpg" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
@@ -36,7 +42,7 @@
   <ItemGroup>
     <Folder Include="wwwroot\CommodityImage\" />
     <Folder Include="wwwroot\CommodityImage\" />
-    <Folder Include="wwwroot\TestImage\" />
+    <Folder Include="wwwroot\CommodityImage\" />
   </ItemGroup>
 
 </Project>

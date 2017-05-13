@@ -18,14 +18,6 @@ namespace ECommerce.Models
 
         public static int DefaultGrade { get => 3; }
 
-        [Required]
-        [Range(0, 5)]
-        public int Grade { get; set; }
-        [Required]
-        public double TotalGrade { get; set; }
-        [Required]
-        public int GradeQuantity { get; set; }
-
         public ICollection<Record> Records { get; set; }
 
         [Required]

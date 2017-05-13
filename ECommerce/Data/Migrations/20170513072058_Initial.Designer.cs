@@ -9,7 +9,7 @@ using ECommerce.Models;
 namespace ECommerce.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170513023545_Initial")]
+    [Migration("20170513072058_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -156,6 +156,8 @@ namespace ECommerce.Data.Migrations
 
                     b.Property<DateTime>("FinishDate");
 
+                    b.Property<decimal>("Price");
+
                     b.Property<int>("SellerID");
 
                     b.Property<DateTime>("StartDate");
@@ -181,12 +183,6 @@ namespace ECommerce.Data.Migrations
 
                     b.Property<string>("CreditCardNumber")
                         .IsRequired();
-
-                    b.Property<int>("Grade");
-
-                    b.Property<int>("GradeQuantity");
-
-                    b.Property<double>("TotalGrade");
 
                     b.HasKey("ID");
 

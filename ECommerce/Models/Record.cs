@@ -30,6 +30,9 @@ namespace ECommerce.Models
         [Required]
         public int CustomerID { get; set; }
 
+        [Required]
+        public decimal Price { get; set; }
+
         [DataType(DataType.Date)]
         public DateTime StartDate { get; set; }
 
