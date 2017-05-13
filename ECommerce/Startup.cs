@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using ECommerce.Data;
 using ECommerce.Models;
 using ECommerce.Services;
+using Microsoft.AspNetCore.Identity;
 
 namespace ECommerce
 {
@@ -65,7 +66,9 @@ namespace ECommerce
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory,
+            ApplicationDbContext context,
+            UserManager<ApplicationUser> userManager)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -93,6 +96,8 @@ namespace ECommerce
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            DbInitializer.Initialize(context, userManager);
         }
     }
 }
