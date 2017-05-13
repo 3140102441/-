@@ -11,11 +11,10 @@ namespace ECommerce.Data
     {
         public static void Initialize(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
-            //Look for any users.
             if (context.Users.Any())
-                {
-                    return;   // DB has been seeded
-                }
+            {
+                return;
+            }
 
             var users = new ApplicationUser[]
             {
@@ -61,6 +60,27 @@ namespace ECommerce.Data
                 context.Add(item);
                 context.SaveChanges();
             }
+
+            var commodities = new Commodity[]
+            {
+                new Commodity
+                {
+                    Price = 20.5M,
+                    Name = "Calculus",
+                    Description = "A Calculus book.",
+                    Quantity = 12,
+                    SellerID = context.Seller.Single(
+                        i => i.ApplicationUserID == context.Users.Single(j => j.UserName == "stester").Id).ID,
+                }
+            };
+
+            foreach (var item in commodities)
+            {
+                context.Add(item);
+                context.SaveChanges();
+            }
+
+
 
         }
     }
