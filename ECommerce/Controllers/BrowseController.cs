@@ -55,5 +55,20 @@ namespace ECommerce.Controllers
                 new Models.BrowseViewModels.IndexViewModel { Genres = Commodity.Genres });
 
         }
+
+        public async Task<IActionResult> Search(string searchSrting)
+        {
+
+            var searchRes = await _context.Commodity.Where(i => i.Name.Contains(searchSrting))
+                .Select(i => new Models.BrowseViewModels.CommodityListViewModel.Commodity
+                {
+                    Genre = i.Genre,
+                    ImagePaths = i.Paths.Select(j => j.FullStaticPath()).ToList(),
+                    Name = i.Name
+                })
+                .ToListAsync();
+
+            return View(new Models.BrowseViewModels.CommodityListViewModel { Commodities = searchRes });
+        }
     }
 }

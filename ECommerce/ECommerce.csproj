@@ -13,7 +13,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="wwwroot\TestImage\Calculus.jpg" />
     <Content Include="wwwroot\TestImage\test1.jpg" />
     <Content Include="wwwroot\TestImage\test2.jpg" />
   </ItemGroup>
@@ -40,6 +39,7 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="wwwroot\CommodityImage\" />
     <Folder Include="wwwroot\CommodityImage\" />
     <Folder Include="wwwroot\CommodityImage\" />
     <Folder Include="wwwroot\CommodityImage\" />
