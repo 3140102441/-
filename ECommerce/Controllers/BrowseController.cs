@@ -73,6 +73,22 @@ namespace ECommerce.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> Search(string searchString)
+        {
+
+            var searchRes = await _context.Commodity.Where(i => i.Name.Contains(searchString))
+                .Select(i => new Models.BrowseViewModels.IndexViewModel.Commodity
+                {
+                    Genre = i.Genre,
+                    ImagePaths = i.Paths.Select(j => j.FullStaticPath()).ToList(),
+                    Name = i.Name
+                })
+                .ToListAsync();
+
+            return View(new Models.BrowseViewModels.IndexViewModel { Commodities = searchRes });
+        }
+
+        [HttpPost]
         public async Task<IActionResult> Genre(Models.BrowseViewModels.IndexViewModel model)
         {
 
