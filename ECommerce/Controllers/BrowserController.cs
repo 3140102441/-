@@ -50,18 +50,9 @@ namespace ECommerce.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var commodities = _context.Commodity
-                .Include(i => i.Paths)
-                .Select(
-                i => new Models.BrowseViewModels.IndexViewModel.Commodity
-                {
-                    CommodityID = i.ID,
-                    Name = i.Name,
-                    Paths = i.Paths.Select(j => j.FullPath()).ToList(),
-                    Genre = i.Genre
-                });
 
-            return View(new Models.BrowseViewModels.IndexViewModel { Commodities = await commodities.ToListAsync() });
+            return View(
+                new Models.BrowseViewModels.IndexViewModel { Genres = Commodity.Genres });
 
         }
     }

@@ -29,5 +29,12 @@ namespace ECommerce.Models
 
         [Required]
         public string Genre { get; set; }
+
+        public static ICollection<string> Genres = new List<string>
+        {
+            "BOOK",
+            "CLOTHES",
+            "FOOD"
+        };
     }
 }
