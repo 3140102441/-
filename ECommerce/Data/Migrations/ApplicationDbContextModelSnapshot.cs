@@ -186,6 +186,9 @@ namespace ECommerce.Data.Migrations
                     b.Property<string>("CreditCardNumber")
                         .IsRequired();
 
+                    b.Property<string>("Description")
+                        .IsRequired();
+
                     b.HasKey("ID");
 
                     b.HasIndex("ApplicationUserID")

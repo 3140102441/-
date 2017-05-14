@@ -34,7 +34,8 @@ namespace ECommerce.Data
                 new Seller
                 {
                     ApplicationUserID = context.Users.Single(i => i.UserName == "stester").Id,
-                    CreditCardNumber = "11112222"
+                    CreditCardNumber = "11112222",
+                    Description = "A seller for testing."
                 }
             };
 
@@ -124,8 +125,6 @@ namespace ECommerce.Data
                     }
                 }
             }
-
-
         }
     }
 }

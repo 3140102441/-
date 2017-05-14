@@ -48,60 +48,63 @@ namespace ECommerce.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
 
             return View(
-                new Models.BrowseViewModels.IndexViewModel { Genres = Commodity.Genres });
+                new Models.BrowseViewModels.IndexViewModel { Genres = Models.Commodity.Genres });
 
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Search(Models.BrowseViewModels.IndexViewModel model)
-        {
-
-            var searchRes = await _context.Commodity.Where(i => i.Name.Contains(model.SearchString))
-                .Select(i => new Models.BrowseViewModels.IndexViewModel.Commodity
-                {
-                    Genre = i.Genre,
-                    ImagePaths = i.Paths.Select(j => j.FullStaticPath()).ToList(),
-                    Name = i.Name
-                })
-                .ToListAsync();
-
-            return View(new Models.BrowseViewModels.IndexViewModel { Commodities = searchRes });
-        }
-
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Search(string searchString)
         {
 
             var searchRes = await _context.Commodity.Where(i => i.Name.Contains(searchString))
-                .Select(i => new Models.BrowseViewModels.IndexViewModel.Commodity
+                .Select(i => new Models.BrowseViewModels.SearchViewModel.Commodity
                 {
                     Genre = i.Genre,
                     ImagePaths = i.Paths.Select(j => j.FullStaticPath()).ToList(),
-                    Name = i.Name
+                    Name = i.Name,
+                    ID = i.ID
                 })
                 .ToListAsync();
 
-            return View(new Models.BrowseViewModels.IndexViewModel { Commodities = searchRes });
+            return View(new Models.BrowseViewModels.SearchViewModel { Commodities = searchRes });
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Genre(Models.BrowseViewModels.IndexViewModel model)
+        [HttpGet]
+        public async Task<IActionResult> Genre(string genre)
         {
 
-            var searchRes = await _context.Commodity.Where(i => i.Genre == model.Genre)
-                .Select(i => new Models.BrowseViewModels.IndexViewModel.Commodity
+            var res = await _context.Commodity.Where(i => i.Genre == genre)
+                .Select(i => new Models.BrowseViewModels.GenreViewModel.Commodity
                 {
-                    Genre = i.Genre,
                     ImagePaths = i.Paths.Select(j => j.FullStaticPath()).ToList(),
-                    Name = i.Name
+                    Name = i.Name,
+                    ID = i.ID
                 })
                 .ToListAsync();
 
-            return View(new Models.BrowseViewModels.IndexViewModel { Commodities = searchRes });
+            return View(new Models.BrowseViewModels.GenreViewModel { Commodities = res, Genre = genre });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Commodity(int commodityID)
+        {
+
+            var comm = await _context.Commodity.Where(i => i.ID == commodityID)
+                .Select(i => new Models.BrowseViewModels.CommodityViewModel
+                {
+                    ImagePaths = i.Paths.Select(j => j.FullStaticPath()).ToList(),
+                    Name = i.Name,
+                    ID = i.ID,
+                    Genre = i.Genre,
+                    Description = i.Description
+                })
+                .SingleOrDefaultAsync();
+
+            return View(comm);
         }
     }
 }

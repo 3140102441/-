@@ -54,7 +54,8 @@ namespace ECommerce.Data.Migrations
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ApplicationUserID = table.Column<string>(nullable: false),
-                    CreditCardNumber = table.Column<string>(nullable: false)
+                    CreditCardNumber = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -68,6 +69,7 @@ namespace ECommerce.Data.Migrations
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Description = table.Column<string>(nullable: false),
+                    Genre = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: false),
                     Price = table.Column<decimal>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),

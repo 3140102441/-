@@ -8,19 +8,17 @@ namespace ECommerce.Models
 {
     public class Seller
     {
-
-        public int ID { get; set; }
-
-        [Required]
-        public string ApplicationUserID { get; set; }
-
-        public ICollection<Commodity> Commodities { get; set; }
-
         public static int DefaultGrade { get => 3; }
 
-        public ICollection<Record> Records { get; set; }
-
+        public int ID { get; set; }
+        [Required]
+        public string Description { get; set; }
+        [Required]
+        public string ApplicationUserID { get; set; }
         [Required]
         public string CreditCardNumber { get; set; }
+
+        public ICollection<Record> Records { get; set; }
+        public ICollection<Commodity> Commodities { get; set; }
     }
 }
