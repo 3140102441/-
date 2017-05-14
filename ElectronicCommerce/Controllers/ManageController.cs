@@ -10,6 +10,8 @@ using Microsoft.Extensions.Options;
 using ElectronicCommerce.Models;
 using ElectronicCommerce.Models.ManageViewModels;
 using ElectronicCommerce.Services;
+using ElectronicCommerce.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace ElectronicCommerce.Controllers
 {
@@ -22,6 +24,8 @@ namespace ElectronicCommerce.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
+        private readonly ApplicationDbContext _context;
+
 
         public ManageController(
           UserManager<ApplicationUser> userManager,
@@ -29,7 +33,8 @@ namespace ElectronicCommerce.Controllers
           IOptions<IdentityCookieOptions> identityCookieOptions,
           IEmailSender emailSender,
           ISmsSender smsSender,
-          ILoggerFactory loggerFactory)
+          ILoggerFactory loggerFactory,
+          ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -37,6 +42,26 @@ namespace ElectronicCommerce.Controllers
             _emailSender = emailSender;
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<ManageController>();
+            _context = context;
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateCeditCardNumber(string creditCardNumber)
+        {
+            var user = await GetCurrentUserAsync();
+            if (user == null)
+            {
+                return View("Error");
+            }
+
+            var customer = _context.Customer.Single(i => i.ApplicationUserID == user.Id);
+            customer.CreditCardNumber = creditCardNumber;
+
+            _context.Update(customer);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
 
         //
@@ -58,13 +83,17 @@ namespace ElectronicCommerce.Controllers
             {
                 return View("Error");
             }
+
+            var customer = _context.Customer.Include(i => i.Records).Single(i => i.ApplicationUserID == user.Id);
+            var seller = _context.Seller.SingleOrDefault(i => i.ApplicationUserID == user.Id);
+
             var model = new IndexViewModel
             {
-                HasPassword = await _userManager.HasPasswordAsync(user),
-                PhoneNumber = await _userManager.GetPhoneNumberAsync(user),
-                TwoFactor = await _userManager.GetTwoFactorEnabledAsync(user),
-                Logins = await _userManager.GetLoginsAsync(user),
-                BrowserRemembered = await _signInManager.IsTwoFactorClientRememberedAsync(user)
+                UserName = user.UserName,
+                PhoneNumber = user.PhoneNumber,
+                CreditCardNumber = customer.CreditCardNumber,
+                IsSeller = seller != null,
+                Records = customer.Records
             };
             return View(model);
         }

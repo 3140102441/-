@@ -9,8 +9,9 @@ namespace ElectronicCommerce.Models.AccountViewModels
     public class LoginViewModel
     {
         [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+        [RegularExpression(@"[a-zA-Z0-9]+")]
+        [StringLength(30, MinimumLength = 4)]
+        public string UserName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
