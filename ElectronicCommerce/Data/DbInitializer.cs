@@ -37,7 +37,8 @@ namespace ElectronicCommerce.Data
                     {
                         ApplicationUserID = context.Users.Single(i => i.UserName == "stester").Id,
                         CreditCardNumber = "11112222",
-                        Description = "A seller for testing."
+                        Description = "A seller for testing.",
+                        Location = "Hangzhou"
                     }
                 };
 
@@ -54,7 +55,8 @@ namespace ElectronicCommerce.Data
                     new Customer
                     {
                         ApplicationUserID = context.Users.Single(i => i.UserName == "ctester").Id,
-                        CreditCardNumber = "12121212"
+                        CreditCardNumber = "12121212",
+                        Location = "Shanghai"
                     }
                 };
 

@@ -11,6 +11,7 @@ namespace ElectronicCommerce.Models
         public enum StateType
         {
             NotPaid,
+            NotSent,
             NotReceived,
             Finished,
             Canceled
@@ -31,5 +32,9 @@ namespace ElectronicCommerce.Models
         public DateTime StartDate { get; set; }
         [DataType(DataType.Date)]
         public DateTime FinishDate { get; set; }
+        [Required]
+        public string FromLocation { get; set; }
+        [Required]
+        public string ToLocation { get; set; }
     }
 }

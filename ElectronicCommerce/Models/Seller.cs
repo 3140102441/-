@@ -17,6 +17,8 @@ namespace ElectronicCommerce.Models
         public string ApplicationUserID { get; set; }
         [Required]
         public string CreditCardNumber { get; set; }
+        [Required]
+        public string Location { get; set; }
 
         public ICollection<Record> Records { get; set; }
         public ICollection<Commodity> Commodities { get; set; }
