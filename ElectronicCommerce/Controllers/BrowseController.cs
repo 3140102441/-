@@ -80,7 +80,7 @@ namespace ElectronicCommerce.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Genre(Commodity.GenreType genre)
+        public async Task<IActionResult> Genre(string searchString, Commodity.GenreType genre)
         {
 
             var res = await _context.Commodity.Where(i => i.Genre == genre)
@@ -111,6 +111,39 @@ namespace ElectronicCommerce.Controllers
                 .SingleOrDefaultAsync();
 
             return View(comm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Pay(int commodityID)
+        {
+
+            var comm = await _context.Commodity.Where(i => i.ID == commodityID)
+                .Select(i => new Models.BrowseViewModels.PayViewModel.Commodity
+                {
+                    ImagePaths = i.ImagePaths.Select(j => j.FullStaticPath()).ToList(),
+                    Name = i.Name,
+                    ID = i.ID,
+                })
+                .SingleAsync();
+
+            var user = await GetCurrentUserAsync();
+            var customer = await _context.Customer.Where(i => i.ApplicationUserID == user.Id).SingleAsync();
+            var buyer = new Models.BrowseViewModels.PayViewModel.Buyer
+            {
+                UserName = user.UserName,
+                CreditCardNumber = customer.CreditCardNumber,
+                Location = customer.Location
+            };
+
+
+
+
+            return View(comm);
+        }
+
+        private Task<ApplicationUser> GetCurrentUserAsync()
+        {
+            return _userManager.GetUserAsync(HttpContext.User);
         }
     }
 }

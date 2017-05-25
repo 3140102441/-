@@ -1,9 +1,13 @@
 # Current Work
-- Account Login
-- Account Register
-- Browse Index
-- Browse Search
-- Browse Genre
-- Browse Commodity
-- Manage Index
-- Manage UpdateCeditCardNumber
+- Account
+  - Login
+  - Register
+- Browse
+  - Index
+  - Search
+  - Genre
+  - Commodity
+  - Pay
+- Manage 
+  - Index
+  - UpdateCeditCardNumber
